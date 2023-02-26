@@ -63,3 +63,17 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(response)
 }
+
+type PriceResponse struct {
+	Data Data `json:"data"`
+	Meta Meta `json:"meta"`
+}
+
+type Meta struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
+type Data struct {
+	Price string `json:"price"`
+}
