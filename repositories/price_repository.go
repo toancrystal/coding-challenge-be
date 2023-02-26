@@ -23,7 +23,7 @@ type priceRepositoryImpl struct {
 
 func (p *priceRepositoryImpl) GetPrice(exchange string, pair string) (*Price, error) {
 	var rs Price
-	err := p.dbCon.QueryRow(`select value from prices where exchange=?1 and pair=?2`, exchange, pair).Scan(&rs)
+	err := p.dbCon.QueryRow("select `value` from prices where exchange=? and pair=?", exchange, pair).Scan(&rs)
 	if err != nil {
 		logger.Errorf("[PriceRepository][GetPrice] Error while get price by exchange %s and pair %s, err=%+v",
 			exchange, pair, err)
