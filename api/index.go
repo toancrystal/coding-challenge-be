@@ -2,19 +2,31 @@ package handler
 
 import (
 	"fmt"
+	logger "github.com/sirupsen/logrus"
 	"github.com/toancrystal/coding-challenge-be/providers"
+	"github.com/toancrystal/coding-challenge-be/repositories"
 	"net/http"
+	"os"
 )
 
 var client = providers.NewCryptoWatchClient()
+var connString = os.Getenv("POSTGRES_CON_STRING")
+var priRepo = repositories.NewPriceRepository(connString)
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	price, err := client.GetPrice("bitfinex", "ethusd")
 	var response string
+	priceRecord, err := priRepo.GetPrice("bitfinex", "ethusd")
 	if err != nil {
-		response = fmt.Sprintf("<h1>Error %s</h1>", err)
+		logger.Error("Get price from db error ", err)
+		price, err := client.GetPrice("bitfinex", "ethusd")
+		if err != nil {
+			logger.Error("Get price from api error ", err)
+			response = fmt.Sprintf("<h1>Error %s</h1>", err)
+		} else {
+			response = fmt.Sprintf("<h1>Eth price %f</h1>", price.Result.Price)
+		}
 	} else {
-		response = fmt.Sprintf("<h1>Eth price %f</h1>", price.Result.Price)
+		response = fmt.Sprintf("<h1>Eth price %f</h1>", priceRecord.Value)
 	}
 	fmt.Fprintf(w, response)
 }
