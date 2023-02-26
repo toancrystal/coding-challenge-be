@@ -33,6 +33,21 @@ func (m *MockIPriceRepository) EXPECT() *MockIPriceRepositoryMockRecorder {
 	return m.recorder
 }
 
+// CreatePrice mocks base method.
+func (m *MockIPriceRepository) CreatePrice(exchange, pair, value string) (int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreatePrice", exchange, pair, value)
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreatePrice indicates an expected call of CreatePrice.
+func (mr *MockIPriceRepositoryMockRecorder) CreatePrice(exchange, pair, value interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreatePrice", reflect.TypeOf((*MockIPriceRepository)(nil).CreatePrice), exchange, pair, value)
+}
+
 // GetPrice mocks base method.
 func (m *MockIPriceRepository) GetPrice(exchange, pair string) (*Price, error) {
 	m.ctrl.T.Helper()
@@ -46,4 +61,19 @@ func (m *MockIPriceRepository) GetPrice(exchange, pair string) (*Price, error) {
 func (mr *MockIPriceRepositoryMockRecorder) GetPrice(exchange, pair interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPrice", reflect.TypeOf((*MockIPriceRepository)(nil).GetPrice), exchange, pair)
+}
+
+// UpdatePrice mocks base method.
+func (m *MockIPriceRepository) UpdatePrice(id int, value string) (int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdatePrice", id, value)
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdatePrice indicates an expected call of UpdatePrice.
+func (mr *MockIPriceRepositoryMockRecorder) UpdatePrice(id, value interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdatePrice", reflect.TypeOf((*MockIPriceRepository)(nil).UpdatePrice), id, value)
 }
